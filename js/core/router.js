@@ -29,6 +29,52 @@
     layoutRendered: false,
     handling: false,
 
+    // آدرس اصلی پروژه؛ مانند /PRSPRO/
+    getBaseUrl: function () {
+      const path = window.location.pathname;
+      const parts = path.split('/').filter(Boolean);
+
+      // نام پوشه پروژه در GitHub Pages
+      const projectName = 'PRSPRO';
+
+      if (
+        parts.length > 0 &&
+        parts[0].toLowerCase() === projectName.toLowerCase()
+      ) {
+        return new URL(
+          '/' + parts[0] + '/',
+          window.location.origin
+        );
+      }
+
+      return new URL('/', window.location.origin);
+    },
+
+    // تبدیل مسیر فایل به آدرس صحیح
+    resolveUrl: function (path, pageUrl) {
+      path = String(path || '').trim();
+
+      if (!path) {
+        throw new Error('مسیر فایل خالی است.');
+      }
+
+      // آدرس کامل خارجی، مانند https://example.com/file.js
+      if (/^(https?:)?\/\//i.test(path)) {
+        return new URL(path, window.location.href).href;
+      }
+
+      // مسیرهای دارای پروتکل دیگر
+      if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(path)) {
+        return new URL(path).href;
+      }
+
+      // مسیرهای داخلی همیشه نسبت به ریشه پروژه محاسبه می‌شوند.
+      const baseUrl = Router.getBaseUrl();
+      const cleanPath = path.replace(/^\/+/, '');
+
+      return new URL(cleanPath, baseUrl).href;
+    },
+
     isLoggedIn: function () {
       return !!(
         window.PMS.Session &&
@@ -96,7 +142,7 @@
           mainRoute = 'login';
         }
 
-        // کاربر واردشده از صفحه ورود به صفحه اصلی خود می‌رود.
+        // کاربر واردشده از صفحه ورود به صفحه اصلی منتقل می‌شود.
         if (Router.isLoggedIn() && mainRoute === 'login') {
           route = Router.getHomeRoute();
           mainRoute = route;
@@ -114,7 +160,6 @@
           Router.changeRoute('events', true);
         }
 
-        // صفحه ورود بدون قالب اصلی برنامه بارگذاری می‌شود.
         if (mainRoute === 'login') {
           await Router.loadLogin();
           return;
@@ -147,7 +192,7 @@
           target
         );
       } else {
-        window.location.hash = target;
+        window.location.hash = route;
       }
     },
 
@@ -177,18 +222,15 @@
       }
 
       try {
-        const pageUrl = new URL(
-          Router.pages.login,
-          document.baseURI
-        );
-
-        const response = await fetch(pageUrl.href, {
+        const pageUrl = Router.resolveUrl(Router.pages.login);
+        const response = await fetch(pageUrl, {
           cache: 'no-store'
         });
 
         if (!response.ok) {
           throw new Error(
-            'خطا در بارگذاری صفحه ورود: ' + response.status
+            'خطا در بارگذاری صفحه ورود: ' +
+            response.status + ' - ' + pageUrl
           );
         }
 
@@ -197,7 +239,7 @@
         app.innerHTML = html;
         Router.layoutRendered = false;
 
-        await Router.executePageScripts(app, pageUrl.href);
+        await Router.executePageScripts(app, pageUrl);
         Router.initPageModule('login');
 
       } catch (error) {
@@ -220,17 +262,21 @@
 
       const pagePath = Router.pages[page];
 
-      if (!pagePath) return;
+      if (!pagePath) {
+        console.error('مسیر صفحه تعریف نشده است:', page);
+        return;
+      }
 
       try {
-        const pageUrl = new URL(pagePath, document.baseURI);
-        const response = await fetch(pageUrl.href, {
+        const pageUrl = Router.resolveUrl(pagePath);
+        const response = await fetch(pageUrl, {
           cache: 'no-store'
         });
 
         if (!response.ok) {
           throw new Error(
-            'خطا در بارگذاری صفحه: ' + response.status
+            'خطا در بارگذاری صفحه: ' +
+            response.status + ' - ' + pageUrl
           );
         }
 
@@ -239,7 +285,7 @@
         content.innerHTML = html;
         Router.currentPage = route;
 
-        await Router.executePageScripts(content, pageUrl.href);
+        await Router.executePageScripts(content, pageUrl);
 
         if (
           window.PMS.Layout &&
@@ -260,56 +306,57 @@
       }
     },
 
-executePageScripts: async function (container, pageUrl) {
-  const scripts = Array.from(container.querySelectorAll('script'));
+    executePageScripts: async function (container, pageUrl) {
+      const scripts = Array.from(
+        container.querySelectorAll('script')
+      );
 
-  for (const oldScript of scripts) {
-    const newScript = document.createElement('script');
+      for (const oldScript of scripts) {
+        const newScript = document.createElement('script');
 
-    Array.from(oldScript.attributes).forEach(function (attribute) {
-      newScript.setAttribute(attribute.name, attribute.value);
-    });
+        Array.from(oldScript.attributes).forEach(function (attribute) {
+          newScript.setAttribute(attribute.name, attribute.value);
+        });
 
-    if (oldScript.hasAttribute('src')) {
-      const originalSrc = oldScript.getAttribute('src').trim();
+        if (oldScript.hasAttribute('src')) {
+          const originalSrc = oldScript.getAttribute('src');
 
-      if (/^(https?:)?\/\//i.test(originalSrc) ||
-          /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(originalSrc)) {
-        newScript.src = originalSrc;
-      } else {
-        const baseUrl = Router.getBaseUrl();
-        const cleanSrc = originalSrc.replace(/^\.?\//, '');
+          newScript.src = Router.resolveUrl(
+            originalSrc,
+            pageUrl
+          );
 
-        newScript.src = new URL(cleanSrc, baseUrl).href;
+          // بارگذاری اسکریپت‌ها به ترتیب انجام شود.
+          newScript.async = false;
+        } else {
+          newScript.textContent = oldScript.textContent;
+        }
+
+        const loaded = new Promise(function (resolve, reject) {
+          if (!newScript.hasAttribute('src')) {
+            resolve();
+            return;
+          }
+
+          newScript.onload = resolve;
+
+          newScript.onerror = function () {
+            reject(
+              new Error(
+                'بارگذاری اسکریپت ناموفق بود: ' +
+                newScript.src
+              )
+            );
+          };
+        });
+
+        oldScript.parentNode.replaceChild(newScript, oldScript);
+
+        if (newScript.hasAttribute('src')) {
+          await loaded;
+        }
       }
-
-      newScript.async = false;
-    } else {
-      newScript.textContent = oldScript.textContent;
-    }
-
-    const loaded = new Promise(function (resolve, reject) {
-      if (!newScript.hasAttribute('src')) {
-        resolve();
-        return;
-      }
-
-      newScript.onload = resolve;
-
-      newScript.onerror = function () {
-        reject(
-          new Error('بارگذاری اسکریپت ناموفق بود: ' + newScript.src)
-        );
-      };
-    });
-
-    oldScript.parentNode.replaceChild(newScript, oldScript);
-
-    if (newScript.hasAttribute('src')) {
-      await loaded;
-    }
-  }
-},
+    },
 
     initPageModule: function (page) {
       const moduleMap = {
@@ -345,7 +392,11 @@ executePageScripts: async function (container, pageUrl) {
       try {
         module.init();
       } catch (error) {
-        console.error('خطا در اجرای init ماژول:', moduleName, error);
+        console.error(
+          'خطا در اجرای init ماژول:',
+          moduleName,
+          error
+        );
       }
     },
 
@@ -384,7 +435,6 @@ executePageScripts: async function (container, pageUrl) {
 
     Router.changeRoute(route, !!replace);
 
-    // اگر آدرس تغییر نکرده باشد، مسیر را دستی اجرا می‌کنیم.
     if (
       Router.getCurrentRoute() === route &&
       !Router.handling
