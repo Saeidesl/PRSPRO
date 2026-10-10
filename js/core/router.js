@@ -29,6 +29,45 @@
     layoutRendered: false,
     handling: false,
 
+    // تشخیص مسیر اصلی پروژه؛ هم برای دامنه ریشه و هم GitHub Pages.
+    getBaseUrl: function () {
+      const path = window.location.pathname;
+      const markers = ['/pages/', '/js/', '/css/', '/assets/'];
+      let basePath = path;
+
+      for (const marker of markers) {
+        const index = path.indexOf(marker);
+
+        if (index !== -1) {
+          basePath = path.substring(0, index + 1);
+          break;
+        }
+      }
+
+      if (!basePath.endsWith('/')) {
+        basePath = basePath.substring(
+          0,
+          basePath.lastIndexOf('/') + 1
+        );
+      }
+
+      return new URL(basePath || '/', window.location.origin);
+    },
+
+    resolveUrl: function (path, pageUrl) {
+      if (/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(path)) {
+        return new URL(path).href;
+      }
+
+      // مسیرهای مطلق را داخل پوشه پروژه نگه می‌داریم.
+      if (path.startsWith('/')) {
+        const baseUrl = Router.getBaseUrl();
+        return new URL(path.substring(1), baseUrl).href;
+      }
+
+      return new URL(path, pageUrl || Router.getBaseUrl()).href;
+    },
+
     isLoggedIn: function () {
       return !!(
         window.PMS.Session &&
@@ -89,21 +128,18 @@
           mainRoute = route;
         }
 
-        // کاربر واردنشده فقط صفحه ورود را می‌بیند.
         if (!Router.isLoggedIn() && mainRoute !== 'login') {
           Router.changeRoute('login', true);
           route = 'login';
           mainRoute = 'login';
         }
 
-        // کاربر واردشده از صفحه ورود به صفحه اصلی خود می‌رود.
         if (Router.isLoggedIn() && mainRoute === 'login') {
           route = Router.getHomeRoute();
           mainRoute = route;
           Router.changeRoute(route, true);
         }
 
-        // کاربران عادی فقط به صفحه رویدادها دسترسی دارند.
         if (
           Router.isLoggedIn() &&
           !Router.isAdmin() &&
@@ -114,7 +150,6 @@
           Router.changeRoute('events', true);
         }
 
-        // صفحه ورود بدون قالب اصلی برنامه بارگذاری می‌شود.
         if (mainRoute === 'login') {
           await Router.loadLogin();
           return;
@@ -147,7 +182,7 @@
           target
         );
       } else {
-        window.location.hash = target;
+        window.location.hash = route;
       }
     },
 
@@ -177,18 +212,15 @@
       }
 
       try {
-        const pageUrl = new URL(
-          Router.pages.login,
-          document.baseURI
-        );
-
-        const response = await fetch(pageUrl.href, {
+        const pageUrl = Router.resolveUrl(Router.pages.login);
+        const response = await fetch(pageUrl, {
           cache: 'no-store'
         });
 
         if (!response.ok) {
           throw new Error(
-            'خطا در بارگذاری صفحه ورود: ' + response.status
+            'خطا در بارگذاری صفحه ورود: ' + response.status +
+            ' - ' + pageUrl
           );
         }
 
@@ -197,7 +229,7 @@
         app.innerHTML = html;
         Router.layoutRendered = false;
 
-        await Router.executePageScripts(app, pageUrl.href);
+        await Router.executePageScripts(app, pageUrl);
         Router.initPageModule('login');
 
       } catch (error) {
@@ -223,14 +255,15 @@
       if (!pagePath) return;
 
       try {
-        const pageUrl = new URL(pagePath, document.baseURI);
-        const response = await fetch(pageUrl.href, {
+        const pageUrl = Router.resolveUrl(pagePath);
+        const response = await fetch(pageUrl, {
           cache: 'no-store'
         });
 
         if (!response.ok) {
           throw new Error(
-            'خطا در بارگذاری صفحه: ' + response.status
+            'خطا در بارگذاری صفحه: ' + response.status +
+            ' - ' + pageUrl
           );
         }
 
@@ -239,7 +272,7 @@
         content.innerHTML = html;
         Router.currentPage = route;
 
-        await Router.executePageScripts(content, pageUrl.href);
+        await Router.executePageScripts(content, pageUrl);
 
         if (
           window.PMS.Layout &&
@@ -271,22 +304,11 @@
         });
 
         if (oldScript.hasAttribute('src')) {
-const originalSrc = oldScript.getAttribute('src');
+          const originalSrc = oldScript.getAttribute('src');
+          newScript.src = Router.resolveUrl(originalSrc, pageUrl);
 
-if (
-  originalSrc.startsWith('/') ||
-  /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(originalSrc)
-) {
-  newScript.src = new URL(
-    originalSrc,
-    document.baseURI
-  ).href;
-} else {
-  newScript.src = new URL(
-    originalSrc,
-    document.baseURI
-  ).href;
-}
+          // اسکریپت‌های خارجی را به ترتیب بارگذاری می‌کنیم.
+          newScript.async = false;
         } else {
           newScript.textContent = oldScript.textContent;
         }
@@ -300,7 +322,9 @@ if (
           newScript.onload = resolve;
           newScript.onerror = function () {
             reject(
-              new Error('بارگذاری اسکریپت ناموفق بود: ' + newScript.src)
+              new Error(
+                'بارگذاری اسکریپت ناموفق بود: ' + newScript.src
+              )
             );
           };
         });
@@ -386,7 +410,6 @@ if (
 
     Router.changeRoute(route, !!replace);
 
-    // اگر آدرس تغییر نکرده باشد، مسیر را دستی اجرا می‌کنیم.
     if (
       Router.getCurrentRoute() === route &&
       !Router.handling
