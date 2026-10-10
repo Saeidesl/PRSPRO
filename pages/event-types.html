@@ -1,0 +1,93 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>انواع رویداد</h2>
+
+      <p>
+        مدیریت انواع فعالیت‌ها و رویدادهای قابل ثبت
+      </p>
+
+    </div>
+
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="event-type-create-button"
+      >
+        + ثبت نوع رویداد
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-body">
+
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="event-type-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="event-type-search"
+            placeholder="جستجوی نوع رویداد..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="event-types-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری انواع رویداد...
+      </div>
+
+
+      <div
+        id="event-types-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+
+      <div
+        id="event-types-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+
+      <div
+        id="event-types-empty"
+        class="table-empty"
+        hidden
+      >
+        نوع رویدادی برای نمایش وجود ندارد.
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/event-types.js"></script>

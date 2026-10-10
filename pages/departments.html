@@ -1,0 +1,90 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>واحدها</h2>
+
+      <p>
+        مدیریت واحدها و بخش‌های سازمان
+      </p>
+
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="department-create-button"
+      >
+        + ثبت واحد
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="department-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="department-search"
+            placeholder="جستجوی نام یا کد واحد..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="departments-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری واحدها...
+      </div>
+
+
+      <div
+        id="departments-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+
+      <div
+        id="departments-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+
+      <div
+        id="departments-empty"
+        class="table-empty"
+        hidden
+      >
+        واحدی برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/departments.js"></script>

@@ -1,0 +1,205 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>گزارش‌ها</h2>
+
+      <p>
+        گزارش وضعیت پروژه‌ها، رویدادها و عملکرد تولید
+      </p>
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-light"
+        id="reports-refresh-button"
+      >
+        ↻ بروزرسانی
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="reports-loading"
+    class="loading-state"
+  >
+    در حال بارگذاری گزارش‌ها...
+  </div>
+
+
+  <div
+    id="reports-error"
+    class="alert alert-danger"
+    hidden
+  ></div>
+
+
+  <div
+    id="reports-content"
+    hidden
+  >
+
+    <div class="dashboard-stats">
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          پروژه‌ها
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-projects"
+        >
+          ۰
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          پروژه‌های فعال
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-active-projects"
+        >
+          ۰
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          پروژه‌های تکمیل‌شده
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-completed-projects"
+        >
+          ۰
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          رویدادها
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-events"
+        >
+          ۰
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          فایل‌ها
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-attachments"
+        >
+          ۰
+        </div>
+      </div>
+
+
+      <div class="stat-card">
+        <div class="stat-card-label">
+          کاربران
+        </div>
+
+        <div
+          class="stat-card-value"
+          id="reports-users"
+        >
+          ۰
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <h3>
+          پروژه‌های بدون فعالیت
+        </h3>
+
+      </div>
+
+      <div class="card-body">
+
+        <div
+          id="reports-inactive-projects"
+          class="table-wrapper"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <h3>
+          خلاصه واحدها
+        </h3>
+
+      </div>
+
+      <div class="card-body">
+
+        <div
+          id="reports-departments"
+          class="table-wrapper"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <div class="card-header">
+
+        <h3>
+          آخرین رویدادها
+        </h3>
+
+      </div>
+
+      <div class="card-body">
+
+        <div
+          id="reports-recent-events"
+          class="table-wrapper"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script src="js/modules/reports.js"></script>

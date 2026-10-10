@@ -1,0 +1,153 @@
+
+/* ================================
+   SMALL SCREENS
+================================ */
+
+@media (max-width: 768px) {
+  /* نمایش عناصر مخصوص موبایل */
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
+  /* فرم‌ها */
+  .form-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions .btn,
+  .form-actions button {
+    width: 100%;
+  }
+
+  /* پنجره‌های بازشو */
+  .modal {
+    width: calc(100% - 24px);
+    max-width: none;
+    max-height: calc(100vh - 24px);
+    margin: 12px;
+    overflow-y: auto;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-8);
+  }
+
+  .modal-footer .btn {
+    width: 100%;
+  }
+
+  /* عنوان صفحه */
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-12);
+  }
+
+  .page-header-actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .page-header-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  /* فیلترها */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .filter-group input,
+  .filter-group select {
+    width: 100%;
+  }
+
+  /* دکمه‌های عملیات */
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8);
+    width: 100%;
+  }
+
+  .action-buttons .btn {
+    flex: 1 1 auto;
+  }
+
+  /* جلوگیری از بیرون‌زدگی محتوا */
+  .page-section,
+  .card,
+  .card-body {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* فاصله مناسب‌تر محتوای صفحه */
+  .page-content {
+    min-width: 0;
+  }
+}
+
+/* ================================
+   VERY SMALL SCREENS
+================================ */
+
+@media (max-width: 480px) {
+  .page-header h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .page-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-header-actions .btn {
+    width: 100%;
+  }
+
+  .filter-bar {
+    padding: var(--space-12);
+  }
+
+  .modal {
+    width: calc(100% - 16px);
+    max-height: calc(100vh - 16px);
+    margin: 8px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons .btn {
+    width: 100%;
+  }
+}
+
+/* ================================
+   DESKTOP
+================================ */
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
+}

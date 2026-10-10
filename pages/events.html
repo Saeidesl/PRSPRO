@@ -1,0 +1,103 @@
+<section class="page-section">
+
+  <div class="page-header">
+    <div>
+      <h2>رویدادها</h2>
+      <p>مشاهده و پیگیری فعالیت‌های ثبت‌شده تولید</p>
+    </div>
+
+    <div class="page-header-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="event-create-button"
+      >
+        + ثبت رویداد
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+          <label for="event-project-filter">
+            پروژه
+          </label>
+
+          <select id="event-project-filter">
+            <option value="">همه پروژه‌ها</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="event-type-filter">
+            نوع رویداد
+          </label>
+
+          <select id="event-type-filter">
+            <option value="">همه انواع</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="event-status-filter">
+            وضعیت
+          </label>
+
+          <select id="event-status-filter">
+            <option value="">همه</option>
+            <option value="ACTIVE">فعال</option>
+            <option value="VOID">باطل‌شده</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="event-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="event-search"
+            placeholder="جستجوی رویداد..."
+          >
+        </div>
+
+      </div>
+
+      <div
+        id="events-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری رویدادها...
+      </div>
+
+      <div
+        id="events-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+      <div
+        id="events-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+      <div
+        id="events-empty"
+        class="table-empty"
+        hidden
+      >
+        رویدادی برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script src="js/modules/events.js"></script>

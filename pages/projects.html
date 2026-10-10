@@ -1,0 +1,85 @@
+<section class="page-section">
+
+  <div class="page-header">
+    <div>
+      <h2>پروژه‌ها</h2>
+      <p>مدیریت و پیگیری پروژه‌های تولید</p>
+    </div>
+
+    <div class="page-header-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="project-create-button"
+      >
+        + پروژه جدید
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+          <label for="project-status-filter">
+            وضعیت
+          </label>
+
+          <select id="project-status-filter">
+            <option value="">همه وضعیت‌ها</option>
+            <option value="ACTIVE">فعال</option>
+            <option value="ON_HOLD">متوقف</option>
+            <option value="COMPLETED">تکمیل‌شده</option>
+            <option value="CANCELLED">لغوشده</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="project-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="project-search"
+            placeholder="کد یا عنوان پروژه..."
+          >
+        </div>
+
+      </div>
+
+      <div
+        id="projects-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری پروژه‌ها...
+      </div>
+
+      <div
+        id="projects-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+      <div
+        id="projects-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+      <div
+        id="projects-empty"
+        class="table-empty"
+        hidden
+      >
+        پروژه‌ای برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script src="js/modules/projects.js"></script>

@@ -1,0 +1,196 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>داشبورد</h2>
+      <p>نمای کلی وضعیت تولید و فعالیت‌های سیستم</p>
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="dashboard-refresh-button"
+      >
+        بروزرسانی
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="dashboard-cache-info"
+    class="alert alert-info"
+    hidden
+  ></div>
+
+
+  <div
+    id="dashboard-error"
+    class="alert alert-danger"
+    hidden
+  ></div>
+
+
+  <div
+    id="dashboard-loading"
+    class="loading-state"
+  >
+    در حال بارگذاری اطلاعات داشبورد...
+  </div>
+
+
+  <!-- آمار اصلی -->
+
+  <div class="dashboard-grid">
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-projects"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        کل پروژه‌ها
+      </div>
+
+    </div>
+
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-active-projects"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        پروژه‌های فعال
+      </div>
+
+    </div>
+
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-completed-projects"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        پروژه‌های تکمیل‌شده
+      </div>
+
+    </div>
+
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-events"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        کل رویدادها
+      </div>
+
+    </div>
+
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-attachments"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        فایل‌ها
+      </div>
+
+    </div>
+
+
+    <div class="card stat-card">
+
+      <div
+        class="stat-card-value"
+        id="dashboard-users"
+      >
+        0
+      </div>
+
+      <div class="stat-card-label">
+        کاربران
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- پروژه‌های اخیر -->
+
+  <div
+    class="dashboard-sections"
+    style="margin-top:16px;"
+  >
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h3>
+          آخرین پروژه‌ها
+        </h3>
+
+        <div
+          id="dashboard-recent-projects"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- رویدادهای اخیر -->
+
+    <div class="card">
+
+      <div class="card-body">
+
+        <h3>
+          آخرین رویدادها
+        </h3>
+
+        <div
+          id="dashboard-recent-events"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/dashboard.js"></script>

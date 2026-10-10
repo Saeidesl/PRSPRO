@@ -1,0 +1,161 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <button
+        type="button"
+        class="btn btn-light"
+        id="project-back-button"
+      >
+        ← بازگشت به پروژه‌ها
+      </button>
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="project-add-event-button"
+      >
+        + ثبت رویداد
+      </button>
+
+    </div>
+
+  </div>
+
+  <div
+    id="project-detail-loading"
+    class="card"
+  >
+    <div class="card-body text-center">
+      در حال بارگذاری اطلاعات پروژه...
+    </div>
+  </div>
+
+  <div
+    id="project-detail-error"
+    class="alert alert-danger"
+    hidden
+  ></div>
+
+  <div
+    id="project-detail-content"
+    hidden
+  >
+
+    <div class="card">
+      <div class="card-body">
+
+        <div class="page-header">
+          <div>
+
+            <h2 id="project-detail-title">
+              -
+            </h2>
+
+            <p id="project-detail-code">
+              -
+            </p>
+
+          </div>
+
+          <div id="project-detail-status">
+            -
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div
+      class="dashboard-grid"
+      style="margin-top: 16px;"
+    >
+
+      <div class="card stat-card">
+        <div class="stat-card-value"
+             id="project-detail-step">
+          -
+        </div>
+
+        <div class="stat-card-label">
+          مرحله فعلی
+        </div>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-card-value"
+             id="project-detail-events-count">
+          0
+        </div>
+
+        <div class="stat-card-label">
+          تعداد رویدادها
+        </div>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-card-value"
+             id="project-detail-created">
+          -
+        </div>
+
+        <div class="stat-card-label">
+          تاریخ ایجاد
+        </div>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-card-value"
+             id="project-detail-updated">
+          -
+        </div>
+
+        <div class="stat-card-label">
+          آخرین فعالیت
+        </div>
+      </div>
+
+    </div>
+
+    <div
+      class="dashboard-sections"
+      style="margin-top: 16px;"
+    >
+
+      <div class="card">
+        <div class="card-body">
+
+          <h3>
+            مشخصات پروژه
+          </h3>
+
+          <div id="project-detail-info">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+
+          <h3>
+            آخرین رویدادها
+          </h3>
+
+          <div id="project-detail-events">
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script src="js/modules/project-detail.js"></script>

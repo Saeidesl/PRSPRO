@@ -1,0 +1,87 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>نقش‌ها</h2>
+      <p>
+        مدیریت نقش‌های کاربری و دسترسی‌های سیستم
+      </p>
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="role-create-button"
+      >
+        + ایجاد نقش
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="role-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="role-search"
+            placeholder="جستجوی نام یا کد نقش..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="roles-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری نقش‌ها...
+      </div>
+
+
+      <div
+        id="roles-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+
+      <div
+        id="roles-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+
+      <div
+        id="roles-empty"
+        class="table-empty"
+        hidden
+      >
+        نقشی برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/roles.js"></script>

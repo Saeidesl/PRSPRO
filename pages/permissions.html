@@ -1,0 +1,70 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>دسترسی‌ها</h2>
+
+      <p>
+        مشاهده دسترسی‌های تعریف‌شده در سیستم
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="permission-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="permission-search"
+            placeholder="جستجوی کد، نام یا ماژول..."
+          >
+
+        </div>
+
+      </div>
+
+      <div
+        id="permissions-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری دسترسی‌ها...
+      </div>
+
+      <div
+        id="permissions-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+      <div
+        id="permissions-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+      <div
+        id="permissions-empty"
+        class="table-empty"
+        hidden
+      >
+        دسترسی‌ای برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script src="js/modules/permissions.js"></script>

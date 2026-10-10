@@ -1,0 +1,90 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>کاربران</h2>
+
+      <p>
+        مدیریت کاربران و دسترسی‌های مرتبط با آن‌ها
+      </p>
+
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="user-create-button"
+      >
+        + ثبت کاربر
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="user-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="user-search"
+            placeholder="جستجوی نام، نام کاربری یا واحد..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="users-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری کاربران...
+      </div>
+
+
+      <div
+        id="users-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+
+      <div
+        id="users-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+
+      <div
+        id="users-empty"
+        class="table-empty"
+        hidden
+      >
+        کاربری برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/users.js"></script>

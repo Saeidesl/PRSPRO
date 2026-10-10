@@ -1,0 +1,113 @@
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>فایل‌ها</h2>
+
+      <p>
+        مشاهده و مدیریت فایل‌های پیوست‌شده به پروژه‌ها و رویدادها
+      </p>
+    </div>
+
+    <div class="page-header-actions">
+
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="attachment-upload-button"
+      >
+        + بارگذاری فایل
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-body">
+
+      <div class="filter-bar">
+
+        <div class="filter-group">
+
+          <label for="attachment-entity-filter">
+            نوع ارتباط
+          </label>
+
+          <select id="attachment-entity-filter">
+
+            <option value="">
+              همه
+            </option>
+
+            <option value="PROJECT">
+              پروژه
+            </option>
+
+            <option value="EVENT">
+              رویداد
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="filter-group">
+
+          <label for="attachment-search">
+            جستجو
+          </label>
+
+          <input
+            type="text"
+            id="attachment-search"
+            placeholder="جستجوی نام فایل..."
+          >
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="attachments-loading"
+        class="loading-state"
+      >
+        در حال بارگذاری فایل‌ها...
+      </div>
+
+
+      <div
+        id="attachments-error"
+        class="alert alert-danger"
+        hidden
+      ></div>
+
+
+      <div
+        id="attachments-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+
+      <div
+        id="attachments-empty"
+        class="table-empty"
+        hidden
+      >
+        فایلی برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<script src="js/modules/attachments.js"></script>

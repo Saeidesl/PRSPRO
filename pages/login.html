@@ -1,0 +1,83 @@
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="login-logo">PRS</div>
+      <h1>سامانه مدیریت تولید</h1>
+      <p>ورود به سامانه</p>
+    </div>
+
+    <form id="login-form" class="login-form">
+      <div class="form-group">
+        <label for="login-username">نام کاربری</label>
+        <input
+          id="login-username"
+          name="username"
+          type="text"
+          autocomplete="username"
+          placeholder="نام کاربری را وارد کنید"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">رمز عبور</label>
+        <input
+          id="login-password"
+          name="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="رمز عبور را وارد کنید"
+          required
+        >
+      </div>
+
+      <div id="login-error" class="login-error hidden"></div>
+
+      <button id="login-button" type="submit" class="login-button">
+        ورود
+      </button>
+    </form>
+  </div>
+</div>
+
+<script src="../js/modules/auth.js"></script>
+
+<script>
+(function () {
+  const form = document.getElementById('login-form');
+  const button = document.getElementById('login-button');
+  const errorBox = document.getElementById('login-error');
+
+  if (!form || !button || !errorBox) return;
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    errorBox.textContent = '';
+    errorBox.classList.add('hidden');
+
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    if (!username || !password) {
+      errorBox.textContent = 'نام کاربری و رمز عبور را وارد کنید.';
+      errorBox.classList.remove('hidden');
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'در حال ورود...';
+
+    try {
+      await PMS.Auth.login(username, password);
+      await PMS.Router.navigate('dashboard', true);
+    } catch (error) {
+      errorBox.textContent = error.message || 'ورود به سامانه انجام نشد.';
+      errorBox.classList.remove('hidden');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'ورود';
+    }
+  });
+})();
+</script>

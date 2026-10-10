@@ -1,0 +1,44 @@
+<section class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>گزارش فعالیت‌ها</h1>
+      <p>مشاهده سوابق و تغییرات ثبت‌شده در سامانه</p>
+    </div>
+    <button id="audit-refresh" class="btn btn-primary" type="button">
+      بروزرسانی
+    </button>
+  </div>
+
+  <div id="audit-message"></div>
+
+  <div class="card">
+    <div class="card-body">
+      <input
+        id="audit-search"
+        type="search"
+        class="form-control"
+        placeholder="جستجو در فعالیت‌ها..."
+      >
+
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>زمان</th>
+              <th>کاربر</th>
+              <th>عملیات</th>
+              <th>نوع موجودیت</th>
+              <th>شناسه</th>
+              <th>دلیل</th>
+            </tr>
+          </thead>
+          <tbody id="audit-table-body">
+            <tr>
+              <td colspan="6">در حال آماده‌سازی صفحه...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

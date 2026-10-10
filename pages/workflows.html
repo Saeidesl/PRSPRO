@@ -1,0 +1,59 @@
+
+<section class="page-section">
+
+  <div class="page-header">
+
+    <div>
+      <h2>Workflowها</h2>
+      <p>مدیریت و مشاهده فرایندهای تولید</p>
+    </div>
+
+    <div class="page-header-actions">
+      <button
+        type="button"
+        class="btn btn-primary"
+        id="workflow-create-button"
+      >
+        + ثبت Workflow
+      </button>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="workflow-search">جستجو</label>
+          <input
+            type="text"
+            id="workflow-search"
+            placeholder="جستجوی Workflow..."
+          >
+        </div>
+      </div>
+
+      <div id="workflows-loading" class="loading-state">
+        در حال بارگذاری Workflowها...
+      </div>
+
+      <div id="workflows-error" class="alert alert-danger" hidden></div>
+
+      <div
+        id="workflows-table-container"
+        class="table-wrapper"
+        hidden
+      ></div>
+
+      <div id="workflows-empty" class="table-empty" hidden>
+        Workflowای برای نمایش وجود ندارد.
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<script src="js/modules/workflows.js"></script>
+<script src="js/modules/workflow-department-assignments.js"></script>
